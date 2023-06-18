@@ -1,26 +1,47 @@
 import React, { useState } from 'react'
-import { Button, Text, View, FlatList, TouchableOpacity } from 'react-native'
-import { global } from '../styles/global'
+import { Button, Text, View, FlatList, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
+import { global } from '../styles/global';
+import { useSelector, useDispatch } from 'react-redux';
+import { addTask, deleteTask, didTask } from '../store/taskAction';
 
 const Home = ({navigation}) => {
-    const [tasks, setTasks] = useState([
-        {"task":"HTML I","done":true, "id": "1"},
-        {"task":"CSS","done":true, "id": "2"},
-        {"task":"Responsive design","done":true, "id": "3"},
-        {"task":"Git","done":true, "id": "4"},
-        ])
+    const dispatch = useDispatch();
+    const tasks = useSelector(state => state.tasks.tasks);
+    console.log(tasks)
+    const [text, setText] = useState('');
+    const changeHandler = val => {
+      setText(val);
+    };
+    const submitTask = () => {
+        dispatch(addTask(text));
+        setText('');
+    };
 
-    const goToTask = () => {
+    const removeTask = id => dispatch(deleteTask(id))
+    const finishedTask = id => dispatch(didTask(id))
+    
+  const goToTask = () => {
         navigation.push("Task")
     }
 
+    
+
   return (
     <View style={global.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Add new Task"
+        onChangeText={changeHandler}
+        value={text}
+        />
+        <Button title='add task' color="blue"  
+        onPress={submitTask}/>
         <FlatList
         data={tasks}
         renderItem={({item}) => (
-            <TouchableOpacity onPress={() => navigation.navigate("Task", item)}>
-            <Text>{item.task}</Text>
+            <TouchableOpacity style={global.item} onPress={() => navigation.navigate("Task", item)}>
+            <Text style={item.done ? {color:"green", fontWeight: 'bold'} : null } onPress={() => finishedTask(item.id)}>{item.task}</Text>
+            <Button title="delete" onPress={() => removeTask(item.id)}/>
             </TouchableOpacity>
   )}
   />
@@ -28,6 +49,13 @@ const Home = ({navigation}) => {
   )
 }
 
-
+const styles = StyleSheet.create({
+  input: {
+      margin: 10,
+      paddingVertical: 6,
+      borderBottomWidth: 1,
+      borderBottomColor: 'gray'
+  },
+});
 
 export default Home

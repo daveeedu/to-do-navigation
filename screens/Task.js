@@ -7,9 +7,9 @@ const Task = ({ navigation, route }) => {
         navigation.goBack()
     }
   return (
-    <View style={global.container}>
+    <View style={global.container} >
         <Text>{route.params.task}</Text>
-        <Button title="Go back to Home" onPress={goToHome} />
+        <Button title="Go back" onPress={goToHome} />
     </View>
   )
 }

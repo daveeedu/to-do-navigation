@@ -21,7 +21,7 @@ const screenOptionsStyle = {
 const AboutStack = () => {
     return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="AboutApp" component={About} />
+            <Stack.Screen name="DoneTab" component={About} />
          </Stack.Navigator>
     )
 }
