@@ -11,6 +11,7 @@ const About = ({navigation}) => {
         <Text>Task that has been done</Text>
         <FlatList
         data={tasksDone}
+        showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
             <TouchableOpacity style={global.item} onPress={() => navigation.navigate("Task", item)}>
             <Text style={item.done ? {color:"green", fontWeight: 'bold'} : null } onPress={() => finishedTask(item.id)}>{item.task}</Text>

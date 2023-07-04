@@ -15,7 +15,6 @@ const screenOptionsStyle = {
             fontWeight: 'bold',
             fontSize: 20
         }
-     
 }
 
 const AboutStack = () => {

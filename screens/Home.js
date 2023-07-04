@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Text, View, FlatList, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
+import { Button, Text, View, FlatList, TouchableOpacity, StyleSheet, TextInput, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { global } from '../styles/global';
 import { useSelector, useDispatch } from 'react-redux';
 import { addTask, deleteTask, didTask } from '../store/taskAction';
@@ -27,6 +27,8 @@ const Home = ({navigation}) => {
     
 
   return (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {/* <SafeAreaView > */}
     <View style={global.container}>
       <TextInput
         style={styles.input}
@@ -38,6 +40,7 @@ const Home = ({navigation}) => {
         onPress={submitTask}/>
         <FlatList
         data={tasks}
+        showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
             <TouchableOpacity style={global.item} onPress={() => navigation.navigate("Task", item)}>
             <Text style={item.done ? {color:"green", fontWeight: 'bold'} : null } onPress={() => finishedTask(item.id)}>{item.task}</Text>
@@ -46,6 +49,8 @@ const Home = ({navigation}) => {
   )}
   />
     </View>
+    {/* </SafeAreaView> */}
+    </TouchableWithoutFeedback>
   )
 }
 
